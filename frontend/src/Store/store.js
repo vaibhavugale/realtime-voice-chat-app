@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authSlice from "../Store/Slices/user-slices"
-import activationSlice from "../Store/Slices/activation-slice"
+import auth from "../Store/Slices/user-slices"
+import activate from "../Store/Slices/activation-slice"
 
 const store = configureStore({
   reducer: {
  
-    authSlice:authSlice,
-    activationSlice:activationSlice
+    authSlice:auth,
+    activationSlice:activate
   },
 });
 

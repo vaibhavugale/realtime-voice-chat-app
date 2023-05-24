@@ -4,6 +4,9 @@ const express = require('express');
 const app = express();
 const Routes = require("./routes")
 const cors = require('cors');
+const cookiesParser = require("cookie-parser");
+
+app.use(cookiesParser());
 
 const corsOption = {
     credentials:true,
@@ -11,9 +14,10 @@ const corsOption = {
    
 };
 app.use(cors(corsOption));
+app.use('/storage',express.static('storage'));
 
 // this middleware convert data request body into json
-app.use(express.json());
+app.use(express.json({limit:'8mb'}));
 // all url go through Routes middleware
 app.use(Routes)
 

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState ={
-   name:'',
-   avatar:''
+   name:'testingText',
+   avatar:'testingText'
 }
  const  activationSlice = createSlice({
     name:'activate',

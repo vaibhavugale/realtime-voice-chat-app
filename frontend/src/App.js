@@ -13,7 +13,9 @@ import Activate from "./pages/Activate/Activate";
 
 function App() {
 
-  
+
+  const { user, isAuth } = useSelector((state) => state.authSlice);
+  console.log("app.",user,isAuth)
   return (
     <div>
       <Navigation />
@@ -22,7 +24,7 @@ function App() {
           path="/"
           index 
           element={
-            <GuestRoute>
+            <GuestRoute user={user} isAuth={isAuth}>
               <Home />
             </GuestRoute>
           }
@@ -30,7 +32,7 @@ function App() {
         <Route
           path="/authenticate"
           element={
-            <GuestRoute>
+            <GuestRoute user={user} isAuth={isAuth}>
               <Authenticate />
             </GuestRoute>
           }
@@ -38,7 +40,7 @@ function App() {
         <Route
           path="/activate"
           element={
-            <SemiProtected>
+            <SemiProtected user={user} isAuth={isAuth}>
               <Activate />
             </SemiProtected>
           }
@@ -46,7 +48,7 @@ function App() {
         <Route
           path="/rooms"
           element={
-            <Protected>
+            <Protected user={user} isAuth={isAuth}>
               <Room />
             </Protected>
           }
@@ -59,9 +61,10 @@ function App() {
 
 // Creating Protected Route Component
 
-const GuestRoute = ({ children, ...rest }) => {
+const GuestRoute = ({ children ,user, isAuth }) => {
   const location = useLocation();
-  const { user, isAuth } = useSelector((state) => state.authSlice);
+  console.log("Guest")
+
   console.log(isAuth);
   return isAuth ? (
     <Navigate to="/rooms" state={{ from: location }} replace />
@@ -69,22 +72,24 @@ const GuestRoute = ({ children, ...rest }) => {
     children
   );
 };
-const SemiProtected = ({ children, ...rest }) => {
+const SemiProtected = ({ children ,user, isAuth }) => {
   const location = useLocation();
-  const { user, isAuth } = useSelector((state) => state.authSlice);
+  console.log("semi")
+
   return !isAuth ? (
     <Navigate to="/" state={{ from: location }} replace />
   ) : (
-    isAuth && !user.activate ? (children) : (<Navigate to="/rooms" state={{ from: location }} replace />)
+    isAuth && !user.activated ? (children) : (<Navigate to="/rooms" state={{ from: location }} replace />)
   );
 };
-const Protected = ({ children, ...rest }) => {
+const Protected = ({ children,user, isAuth }) => {
   const location = useLocation();
-  const { user, isAuth } = useSelector((state) => state.authSlice);
+  console.log("pro")
+
   return !isAuth ? (
     <Navigate to="/" state={{ from: location }} replace />
   ) : (
-    isAuth && !user.activate ? (<Navigate to="/activate" state={{ from: location }} replace />) 
+    isAuth && !user.activated ? (<Navigate to="/activate" state={{ from: location }} replace />) 
     :
      (children)
   );

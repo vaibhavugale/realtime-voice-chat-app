@@ -7,6 +7,8 @@ const Home = () => {
 
 
 const navigate = useNavigate();
+
+
  function startRegistration(){
   navigate("/authenticate")
  }

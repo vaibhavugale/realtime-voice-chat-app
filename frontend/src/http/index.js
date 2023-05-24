@@ -17,5 +17,7 @@ return api.post('http://localhost:5500/api/send-otp',data);
 export const verifyOtp=(data)=>{
     return api.post('http://localhost:5500/api/verify-otp',data);
 } 
-
+export const activate=(data)=>{
+    return api.post('http://localhost:5500/api/activate',data);
+} 
 export default api;
